@@ -40,12 +40,14 @@ bool json2pb(google::protobuf::Message& msg, const std::string& json_value)
     auto json = Json::parse(json_value);
     return Pb2Json::Json2Message(json, msg, true);
 }
-string pb2json(const PbMessage& msg)
+string pb2json(const PbMessage& msg, bool style)
 {
     Json json;
     Pb2Json::Message2Json(msg,json);
 
     ostringstream oss;
+    if(style)
+        oss<<std::setw(4);
     oss<<json;
     return oss.str();
 
