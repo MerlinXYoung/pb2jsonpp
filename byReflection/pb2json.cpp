@@ -47,8 +47,8 @@ bool Pb2Json::Json2Message(const Json& json, ProtobufMsg& message, bool str2enum
                 const ::google::protobuf::EnumValueDescriptor* pevdesc = nullptr;
 
                 if (str2enum) {
-                    auto str = value.get<std::string>();
-                    pevdesc = pedesc->FindValueByName(str/*value.get<std::string>()*/);
+                    //auto str = value.get<std::string>();
+                    pevdesc = pedesc->FindValueByName(/*str*/value.get<std::string>());
                 } else {
                     pevdesc = pedesc->FindValueByNumber(value.get<int>());
                 }

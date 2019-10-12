@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.15)
 
 project(pb2json CXX)
 
+find_package(Protobuf REQUIRED)
+include_directories(${Protobuf_INCLUDE_DIR})
 add_library(pb2json_static STATIC  byReflection/pb2json.cpp byReflection/pb2json.h json.hpp pb2json.h pb2json.cpp )
 add_library(pb2json SHARED byReflection/pb2json.cpp byReflection/pb2json.h json.hpp pb2json.h pb2json.cpp )
 
