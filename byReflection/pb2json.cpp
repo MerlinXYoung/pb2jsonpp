@@ -47,7 +47,8 @@ bool Pb2Json::Json2Message(const Json& json, ProtobufMsg& message, bool str2enum
                 const ::google::protobuf::EnumValueDescriptor* pevdesc = nullptr;
 
                 if (str2enum) {
-                    pevdesc = pedesc->FindValueByName(value.get<std::string>());
+                    auto str = value.get<std::string>();
+                    pevdesc = pedesc->FindValueByName(str/*value.get<std::string>()*/);
                 } else {
                     pevdesc = pedesc->FindValueByNumber(value.get<int>());
                 }
@@ -92,7 +93,7 @@ bool Pb2Json::Json2Message(const Json& json, ProtobufMsg& message, bool str2enum
             } break;
 
             case ProtobufFieldDescriptor::TYPE_MESSAGE: {
-                if (value.is_object()) Json2Message(value, *reflection->MutableMessage(&message, field));
+                if (value.is_object()) Json2Message(value, *reflection->MutableMessage(&message, field), str2enum);
             } break;
 
             default:
@@ -104,7 +105,7 @@ bool Pb2Json::Json2Message(const Json& json, ProtobufMsg& message, bool str2enum
 
 bool Pb2Json::Json2RepeatedMessage(const Json& json, ProtobufMsg& message, const ProtobufFieldDescriptor* field,
                                    const ProtobufReflection* reflection, bool str2enum) {
-    int count = json.count(field->name());
+    int count = json.size();//json.count(field->name());
     for (auto j = 0; j < count; ++j) {
         switch (field->type()) {
             case ProtobufFieldDescriptor::TYPE_BOOL: {
@@ -205,7 +206,7 @@ void Pb2Json::Message2Json(const ProtobufMsg& message, Json& json, bool enum2str
         switch (field->type()) {
             case ProtobufFieldDescriptor::TYPE_MESSAGE: {
                 const ProtobufMsg& tmp_message = reflection->GetMessage(message, field);
-                if (0 != tmp_message.ByteSize()) Message2Json(tmp_message, json[field->name()]);
+                if (0 != tmp_message.ByteSize()) Message2Json(tmp_message, json[field->name()], enum2str);
             } break;
 
             case ProtobufFieldDescriptor::TYPE_BOOL:
