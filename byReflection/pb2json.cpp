@@ -93,7 +93,7 @@ bool Pb2Json::Json2Message(const Json& json, ProtobufMsg& message, bool str2enum
             } break;
 
             case ProtobufFieldDescriptor::TYPE_MESSAGE: {
-                if (value.is_object()) Json2Message(value, *reflection->MutableMessage(&message, field), str2enum);
+                if (value.is_object()) Json2Message(value, *reflection->MutableMessage(&message, field), str2enum); 
             } break;
 
             default:
