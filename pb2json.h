@@ -7,3 +7,5 @@ bool json_file2pb(google::protobuf::Message& msg, const std::string& json_file_p
 bool json2pb(google::protobuf::Message& msg, std::istream& is);
 bool json2pb(google::protobuf::Message& msg, const std::string& json_value);
 std::string pb2json(const google::protobuf::Message& msg, bool style = false);
+
+
