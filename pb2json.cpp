@@ -1,5 +1,7 @@
 #include <string>
 #include <fstream>
+#include <sstream>
+#include <iomanip>
 #include <google/protobuf/message.h>
 #include "json.hpp"
 #include "byReflection/pb2json.h"
@@ -47,7 +49,7 @@ string pb2json(const PbMessage& msg, bool style)
 
     ostringstream oss;
     if(style)
-        oss<<std::setw(4);
+        oss<<setw(4);
     oss<<json;
     return oss.str();
 
